@@ -2,6 +2,10 @@ import AVFoundation
 import Speech
 
 @Observable final class SpeechRecognizer {
+  init(locale: Locale = .current) {
+    self.recognizer = SFSpeechRecognizer(locale: locale)!
+  }
+
   var isRecognizing: Bool = false
   var isAuthorized: Bool = false
   var text: String?
@@ -12,7 +16,7 @@ import Speech
     case notRecognizing
   }
 
-  private let recognizer: SFSpeechRecognizer = .init(locale: Locale(identifier: "ja_JP"))!
+  private var recognizer: SFSpeechRecognizer
   private let audioEngine = AVAudioEngine()
   private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
   private var recognitionTask: SFSpeechRecognitionTask?

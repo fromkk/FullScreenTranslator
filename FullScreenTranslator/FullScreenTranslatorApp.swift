@@ -1,5 +1,7 @@
 import AppKit
+import Speech
 import SwiftUI
+import Translation
 
 // NSWindowへアクセスするためのNSViewRepresentable
 struct WindowAccessor: NSViewRepresentable {
@@ -75,7 +77,31 @@ struct ContentView: View {
 @main
 struct FullScreenTranslatorApp: App {
   @State var error: (any Error)?
-  @State var speechRecognizer = SpeechRecognizer()
+  @State var speechRecognizer: SpeechRecognizer = .init()
+  @State var locale: Locale = .current
+  @State var translateLanguage: Locale.Language = .init(identifier: "en")
+  @State var supportedLanguages: [Locale.Language] = []
+
+  init() {
+    if let data = UserDefaults.standard.data(forKey: baseLocaleKey) {
+      do {
+        locale = try JSONDecoder().decode(Locale.self, from: data)
+      } catch {
+        print("error \(error.localizedDescription)")
+      }
+    }
+
+    if let data = UserDefaults.standard.data(forKey: translateLanguageKey) {
+      do {
+        translateLanguage = try JSONDecoder().decode(Locale.Language.self, from: data)
+      } catch {
+        print("error \(error.localizedDescription)")
+      }
+    }
+
+    speechRecognizer = SpeechRecognizer(locale: locale)
+    speechRecognizer.requestAuthorization()
+  }
 
   var body: some Scene {
     WindowGroup {
@@ -92,6 +118,7 @@ struct FullScreenTranslatorApp: App {
             Button {
               do {
                 try speechRecognizer.stopRecognition()
+                speechRecognizer.text = nil
               } catch {
                 self.error = error
               }
@@ -115,6 +142,32 @@ struct FullScreenTranslatorApp: App {
               }
             }
           }
+        } else {
+          Text("Please allow permission")
+        }
+
+        Picker(
+          "Base locale", selection: $locale,
+          content: {
+            ForEach(Array(SFSpeechRecognizer.supportedLocales()), id: \.self) { currentLocale in
+              Text(currentLocale.identifier).tag(currentLocale)
+            }
+          }
+        )
+
+        Picker(
+          "Translate language", selection: $translateLanguage,
+          content: {
+            ForEach(supportedLanguages, id: \.self) { language in
+              Text(language.languageCode?.identifier ?? "unknown").tag(language)
+            }
+          }
+        )
+
+        Button {
+          exit(1)
+        } label: {
+          Text("Quit")
         }
       },
       label: {
@@ -128,8 +181,33 @@ struct FullScreenTranslatorApp: App {
           }
         }
         .task {
-          speechRecognizer.requestAuthorization()
+          let availability = LanguageAvailability()
+          supportedLanguages = await availability.supportedLanguages
         }
-      })
+        .onChange(of: locale) { oldValue, newValue in
+          speechRecognizer = SpeechRecognizer(locale: newValue)
+          speechRecognizer.requestAuthorization()
+          save()
+        }
+        .onChange(of: translateLanguage) { oldValue, newValue in
+          save()
+        }
+      }
+    )
+  }
+
+  private let baseLocaleKey = "baseLocale"
+  private let translateLanguageKey = "translateLanguage"
+
+  private func save() {
+    do {
+      let localeData = try JSONEncoder().encode(locale)
+      UserDefaults.standard.set(localeData, forKey: baseLocaleKey)
+
+      let translateLanguageData = try JSONEncoder().encode(translateLanguage)
+      UserDefaults.standard.set(translateLanguageData, forKey: translateLanguageKey)
+    } catch {
+      print("error \(error.localizedDescription)")
+    }
   }
 }
