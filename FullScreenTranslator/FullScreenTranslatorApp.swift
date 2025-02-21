@@ -93,6 +93,8 @@ struct FullScreenTranslatorApp: App {
   @State var supportedLanguages: [Locale.Language] = []
   @State var translator: Translator = .init()
   @State var configuration: TranslationSession.Configuration?
+  private let languageAvailability = LanguageAvailability()
+  @State var notSupported: Bool = false
 
   init() {
     if let data = UserDefaults.standard.data(forKey: baseLocaleKey) {
@@ -119,6 +121,19 @@ struct FullScreenTranslatorApp: App {
     WindowGroup {
       ContentView(text: speechRecognizer.text, translated: translator.translated)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .translationTask(configuration) { session in
+          Task {
+            do {
+              try await session.prepareTranslation()
+              if let text = speechRecognizer.text {
+                _ = try await session.translate(text)
+              }
+              translator.setSession(session)
+            } catch {
+              print("translationTask.error \(error.localizedDescription)")
+            }
+          }
+        }
     }
     // タイトルバーを非表示にするなど、ウィンドウスタイルを設定
     .windowStyle(HiddenTitleBarWindowStyle())
@@ -208,19 +223,27 @@ struct FullScreenTranslatorApp: App {
           updateTranslateConfiguration()
         }
         .onChange(of: speechRecognizer.text) { oldValue, newValue in
-          guard let text = newValue else { return }
+          guard let text = newValue, !text.isEmpty else { return }
           translator.translate(text)
-        }
-        .translationTask(configuration) {
-          translator.setSession($0)
         }
       }
     )
   }
 
   private func updateTranslateConfiguration() {
-    configuration?.invalidate()
-    configuration = .init(source: locale.language, target: translateLanguage)
+    Task {
+      let status = await languageAvailability.status(from: locale.language, to: translateLanguage)
+      print("\(Self.self).updateTranslateConfiguration status: \(status)")
+      switch status {
+      case .installed, .supported:
+        configuration?.invalidate()
+        configuration = .init(source: locale.language, target: translateLanguage)
+      case .unsupported:
+        notSupported = true
+      @unknown default:
+        return
+      }
+    }
   }
 
   private let baseLocaleKey = "baseLocale"
