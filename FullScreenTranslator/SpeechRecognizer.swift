@@ -52,6 +52,9 @@ import Speech
     guard let recognitionRequest = recognitionRequest else {
       return
     }
+    if recognizer.supportsOnDeviceRecognition {
+      recognitionRequest.requiresOnDeviceRecognition = true
+    }
     recognitionRequest.shouldReportPartialResults = true
 
     // 認識タスクを開始し、結果を受け取る
@@ -61,7 +64,7 @@ import Speech
       if let result = result {
         // 認識したテキストを text プロパティに反映
         self.text = result.bestTranscription.formattedString
-        print(self.text ?? "no text")
+        print("recognized: \(self.text ?? "no text")")
         self.resetTimerStart()
       }
       if error != nil || (result?.isFinal ?? false) {
@@ -107,7 +110,7 @@ import Speech
             try await Task.sleep(for: .seconds(0.1))
             try self.startRecognition()
           } catch {
-            print("error \(error.localizedDescription)")
+            print("\(Self.self) error \(error.localizedDescription)")
           }
         }
       })

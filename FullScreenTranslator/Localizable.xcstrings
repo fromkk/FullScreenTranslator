@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Base locale" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言語設定"
+          }
+        }
+      }
     },
     "Please allow permission" : {
       "localizations" : {
@@ -45,7 +52,14 @@
       }
     },
     "Translate language" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳言語"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

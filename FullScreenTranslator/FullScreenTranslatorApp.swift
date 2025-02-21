@@ -30,16 +30,26 @@ struct WindowAccessor: NSViewRepresentable {
 // 下部に固定された字幕風テキストを表示するビュー
 struct SubtitlesView: View {
   var text: String
+  var translated: String?
 
   var body: some View {
     VStack {
       Spacer()  // 画面上部の余白
-      Text(text)
-        .font(.system(size: 48, weight: .bold))
-        .foregroundColor(.white)
-        .padding(.vertical, 8)
-        .frame(maxWidth: .infinity)
-        // 背景を半透明の黒にして視認性を向上
+      VStack(spacing: 8) {
+        Text(text)
+          .font(.system(size: 24, weight: .bold))
+          .foregroundColor(.white)
+          .frame(maxWidth: .infinity, alignment: .center)
+          .multilineTextAlignment(.center)
+
+        if let translated {
+          Text(translated)
+            .font(.system(size: 48, weight: .bold))
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .multilineTextAlignment(.center)
+        }
+      }
         .background(Color.black.opacity(0.6))
     }
     .ignoresSafeArea()
@@ -49,18 +59,18 @@ struct SubtitlesView: View {
 // メインコンテンツ。WindowAccessorでNSWindowの設定を変更してオーバーレイウィンドウにする
 struct ContentView: View {
   var text: String?
+  var translated: String?
 
   var body: some View {
     ZStack {
       if let text {
-        SubtitlesView(text: text)
+        SubtitlesView(text: text, translated: translated)
       }
       WindowAccessor(text: text) { window in
         if let window = window {
           window.isOpaque = false
           window.backgroundColor = .clear
           window.styleMask = [.borderless]
-          // 他のアプリより前面に表示するため、ウィンドウレベルを設定
           window.level = .screenSaver
           window.ignoresMouseEvents = true
           window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
@@ -81,13 +91,15 @@ struct FullScreenTranslatorApp: App {
   @State var locale: Locale = .current
   @State var translateLanguage: Locale.Language = .init(identifier: "en")
   @State var supportedLanguages: [Locale.Language] = []
+  @State var translator: Translator = .init()
+  @State var configuration: TranslationSession.Configuration?
 
   init() {
     if let data = UserDefaults.standard.data(forKey: baseLocaleKey) {
       do {
         locale = try JSONDecoder().decode(Locale.self, from: data)
       } catch {
-        print("error \(error.localizedDescription)")
+        print("\(Self.self) error \(error.localizedDescription)")
       }
     }
 
@@ -95,7 +107,7 @@ struct FullScreenTranslatorApp: App {
       do {
         translateLanguage = try JSONDecoder().decode(Locale.Language.self, from: data)
       } catch {
-        print("error \(error.localizedDescription)")
+        print("\(Self.self)error \(error.localizedDescription)")
       }
     }
 
@@ -105,7 +117,7 @@ struct FullScreenTranslatorApp: App {
 
   var body: some Scene {
     WindowGroup {
-      ContentView(text: speechRecognizer.text)
+      ContentView(text: speechRecognizer.text, translated: translator.translated)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     // タイトルバーを非表示にするなど、ウィンドウスタイルを設定
@@ -150,7 +162,7 @@ struct FullScreenTranslatorApp: App {
           "Base locale", selection: $locale,
           content: {
             ForEach(Array(SFSpeechRecognizer.supportedLocales()), id: \.self) { currentLocale in
-              Text(currentLocale.identifier).tag(currentLocale)
+              Text(currentLocale.identifier).tag(currentLocale.identifier)
             }
           }
         )
@@ -159,7 +171,7 @@ struct FullScreenTranslatorApp: App {
           "Translate language", selection: $translateLanguage,
           content: {
             ForEach(supportedLanguages, id: \.self) { language in
-              Text(language.languageCode?.identifier ?? "unknown").tag(language)
+              Text(language.languageCode?.identifier ?? "unknown").tag(language.languageCode?.identifier ?? "unknown")
             }
           }
         )
@@ -183,17 +195,32 @@ struct FullScreenTranslatorApp: App {
         .task {
           let availability = LanguageAvailability()
           supportedLanguages = await availability.supportedLanguages
+          updateTranslateConfiguration()
         }
         .onChange(of: locale) { oldValue, newValue in
           speechRecognizer = SpeechRecognizer(locale: newValue)
           speechRecognizer.requestAuthorization()
           save()
+          updateTranslateConfiguration()
         }
         .onChange(of: translateLanguage) { oldValue, newValue in
           save()
+          updateTranslateConfiguration()
+        }
+        .onChange(of: speechRecognizer.text) { oldValue, newValue in
+          guard let text = newValue else { return }
+          translator.translate(text)
+        }
+        .translationTask(configuration) {
+          translator.setSession($0)
         }
       }
     )
+  }
+
+  private func updateTranslateConfiguration() {
+    configuration?.invalidate()
+    configuration = .init(source: locale.language, target: translateLanguage)
   }
 
   private let baseLocaleKey = "baseLocale"
@@ -207,7 +234,7 @@ struct FullScreenTranslatorApp: App {
       let translateLanguageData = try JSONEncoder().encode(translateLanguage)
       UserDefaults.standard.set(translateLanguageData, forKey: translateLanguageKey)
     } catch {
-      print("error \(error.localizedDescription)")
+      print("\(Self.self) error \(error.localizedDescription)")
     }
   }
 }
