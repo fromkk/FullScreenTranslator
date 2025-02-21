@@ -27,7 +27,6 @@ struct WindowAccessor: NSViewRepresentable {
   }
 }
 
-// 下部に固定された字幕風テキストを表示するビュー
 struct SubtitlesView: View {
   var text: String
   var translated: String?
@@ -56,7 +55,6 @@ struct SubtitlesView: View {
   }
 }
 
-// メインコンテンツ。WindowAccessorでNSWindowの設定を変更してオーバーレイウィンドウにする
 struct ContentView: View {
   var text: String?
   var translated: String?
@@ -125,9 +123,6 @@ struct FullScreenTranslatorApp: App {
           Task {
             do {
               try await session.prepareTranslation()
-              if let text = speechRecognizer.text {
-                _ = try await session.translate(text)
-              }
               translator.setSession(session)
             } catch {
               print("translationTask.error \(error.localizedDescription)")
@@ -136,7 +131,6 @@ struct FullScreenTranslatorApp: App {
         }
         .alert("Not supported language", isPresented: $notSupported, actions: {})
     }
-    // タイトルバーを非表示にするなど、ウィンドウスタイルを設定
     .windowStyle(HiddenTitleBarWindowStyle())
 
     MenuBarExtra(

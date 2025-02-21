@@ -57,12 +57,10 @@ import Speech
     }
     recognitionRequest.shouldReportPartialResults = true
 
-    // 認識タスクを開始し、結果を受け取る
     recognitionTask = recognizer.recognitionTask(with: recognitionRequest) {
       [weak self] result, error in
       guard let self = self else { return }
       if let result = result {
-        // 認識したテキストを text プロパティに反映
         self.text = result.bestTranscription.formattedString
         print("recognized: \(self.text ?? "no text")")
         self.resetTimerStart()
@@ -76,7 +74,6 @@ import Speech
       }
     }
 
-    // オーディオ入力のタップを設定してバッファをリクエストに渡す
     let recordingFormat = node.outputFormat(forBus: 0)
     node.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
       self.recognitionRequest?.append(buffer)
