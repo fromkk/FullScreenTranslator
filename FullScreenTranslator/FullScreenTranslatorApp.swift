@@ -134,6 +134,7 @@ struct FullScreenTranslatorApp: App {
             }
           }
         }
+        .alert("Not supported language", isPresented: $notSupported, actions: {})
     }
     // タイトルバーを非表示にするなど、ウィンドウスタイルを設定
     .windowStyle(HiddenTitleBarWindowStyle())

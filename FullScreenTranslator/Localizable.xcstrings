@@ -11,6 +11,16 @@
         }
       }
     },
+    "Not supported language" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サポートされていない言語の組み合わせです"
+          }
+        }
+      }
+    },
     "Please allow permission" : {
       "localizations" : {
         "ja" : {
