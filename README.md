@@ -1,6 +1,8 @@
+![screenshot](screenshot.png)
+
 # FullScreenTranslator
 
-This is a macOS application that translates microphone input and displays it at the bottom of the screen.
+This is an application for macOS that translates the contents of input from the microphone and displays them at the bottom of the screen.
 
 ## Supports
 
