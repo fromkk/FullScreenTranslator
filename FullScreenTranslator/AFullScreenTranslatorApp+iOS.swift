@@ -11,7 +11,6 @@ struct SubtitlesView: View {
 
   var body: some View {
     VStack {
-      Spacer()  // 画面上部の余白
       VStack(spacing: 8) {
         Text(text)
           .font(.system(size: 24, weight: .bold))
@@ -29,7 +28,6 @@ struct SubtitlesView: View {
       }
         .background(Color.black.opacity(0.6))
     }
-    .ignoresSafeArea()
   }
 }
 
