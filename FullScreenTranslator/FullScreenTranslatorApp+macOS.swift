@@ -1,3 +1,4 @@
+#if canImport(AppKit)
 import AppKit
 import Speech
 import SwiftUI
@@ -256,3 +257,4 @@ struct FullScreenTranslatorApp: App {
     }
   }
 }
+#endif
