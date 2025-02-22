@@ -119,8 +119,8 @@ struct FullScreenTranslatorApp: App {
             Picker(
               "Base locale", selection: $locale,
               content: {
-                ForEach(Array(SFSpeechRecognizer.supportedLocales()), id: \.self) { currentLocale in
-                  Text(currentLocale.identifier).tag(currentLocale.identifier)
+                ForEach(Array(SFSpeechRecognizer.supportedLocales().sorted(using: KeyPathComparator(\.identifier))), id: \.self) { currentLocale in
+                  Text(currentLocale.identifier).tag(currentLocale)
                 }
               }
             )
@@ -129,7 +129,7 @@ struct FullScreenTranslatorApp: App {
               "Translate language", selection: $translateLanguage,
               content: {
                 ForEach(supportedLanguages, id: \.self) { language in
-                  Text(language.languageCode?.identifier ?? "unknown").tag(language.languageCode?.identifier ?? "unknown")
+                  Text(language.languageCode?.identifier ?? "unknown").tag(language)
                 }
               }
             )
