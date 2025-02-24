@@ -14,19 +14,16 @@
         VStack(spacing: 8) {
           Text(text)
             .font(.system(size: 24, weight: .bold))
-            .foregroundColor(.white)
             .frame(maxWidth: .infinity, alignment: .center)
             .multilineTextAlignment(.center)
 
           if let translated {
             Text(translated)
               .font(.system(size: 48, weight: .bold))
-              .foregroundColor(.white)
               .frame(maxWidth: .infinity, alignment: .center)
               .multilineTextAlignment(.center)
           }
         }
-        .background(Color.black.opacity(0.6))
       }
     }
   }
