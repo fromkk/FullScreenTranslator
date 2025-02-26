@@ -5,40 +5,6 @@
   import SwiftUI
   import Translation
 
-  struct SubtitlesView: View {
-    var text: String
-    var translated: String?
-
-    var body: some View {
-      VStack {
-        VStack(spacing: 8) {
-          Text(text)
-            .font(.system(size: 24, weight: .bold))
-            .frame(maxWidth: .infinity, alignment: .center)
-            .multilineTextAlignment(.center)
-
-          if let translated {
-            Text(translated)
-              .font(.system(size: 48, weight: .bold))
-              .frame(maxWidth: .infinity, alignment: .center)
-              .multilineTextAlignment(.center)
-          }
-        }
-      }
-    }
-  }
-
-  struct ContentView: View {
-    var text: String?
-    var translated: String?
-
-    var body: some View {
-      if let text {
-        SubtitlesView(text: text, translated: translated)
-      }
-    }
-  }
-
   @main
   struct FullScreenTranslatorApp: App {
     @State var alertMessage: AlertMessage?
@@ -50,6 +16,7 @@
     @State var configuration: TranslationSession.Configuration?
     private let languageAvailability = LanguageAvailability()
     @State var notSupported: Bool = false
+    @State var isPresentedSettings: Bool = false
 
     init() {
       if let data = UserDefaults.standard.data(forKey: baseLocaleKey) {
@@ -78,73 +45,36 @@
         translateLanguageCode = "en"
       }
 
+      let duration = UserDefaults.standard.double(forKey: durationKey)
+      if duration > 0 {
+        speechRecognizer.resetDuration = duration
+      }
+
       speechRecognizer = SpeechRecognizer(locale: Locale(identifier: localeIdentifier))
       speechRecognizer.requestAuthorization()
     }
 
     var body: some Scene {
       WindowGroup {
-        ScrollView {
-          VStack(spacing: 32) {
-            ContentView(text: speechRecognizer.text, translated: translator.translated)
-              .frame(maxWidth: .infinity)
-
-            VStack(spacing: 8) {
-              if speechRecognizer.isAuthorized {
-                if speechRecognizer.isRecognizing {
-                  Button {
-                    do {
-                      try speechRecognizer.stopRecognition()
-                      speechRecognizer.text = nil
-                    } catch {
-                      self.alertMessage = .init(message: error.localizedDescription)
-                    }
-                  } label: {
-                    HStack {
-                      Image(systemName: "stop.circle.fill")
-                      Text("Stop")
-                    }
-                  }
-                } else {
-                  Button {
-                    do {
-                      try speechRecognizer.startRecognition()
-                    } catch {
-                      self.alertMessage = .init(message: error.localizedDescription)
-                    }
-                  } label: {
-                    HStack {
-                      Image(systemName: "play.fill")
-                      Text("Start")
-                    }
-                  }
-                }
-              } else {
-                Text("Please allow permission")
+        NavigationStack {
+          ScrollView {
+            VStack(spacing: 32) {
+              ContentView(text: speechRecognizer.text, translated: translator.translated)
+                .frame(maxWidth: .infinity)
+              Spacer()
+            }
+            .padding(16)
+          }
+          .navigationTitle(Text("FullScreenTranslator"))
+          .navigationBarTitleDisplayMode(.inline)
+          .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+              Button {
+                isPresentedSettings = true
+              } label: {
+                Image(systemName: "gear")
               }
-
-              Picker(
-                "Base locale", selection: $localeIdentifier,
-                content: {
-                  ForEach(
-                    Array(
-                      SFSpeechRecognizer.supportedLocales().sorted(
-                        using: KeyPathComparator(\.identifier))
-                    ).map(\.identifier), id: \.self
-                  ) { currentLocale in
-                    Text(currentLocale).tag(currentLocale)
-                  }
-                }
-              )
-
-              Picker(
-                "Translate language", selection: $translateLanguageCode,
-                content: {
-                  ForEach(supportedLanguageCodes, id: \.self) { language in
-                    Text(language).tag(language)
-                  }
-                }
-              )
+              .accessibilityLabel("Settings")
             }
           }
         }
@@ -185,7 +115,81 @@
           item: $alertMessage,
           content: { alertMessage in
             Alert(title: Text(alertMessage.message))
-          })
+          }
+        )
+        .sheet(isPresented: $isPresentedSettings) {
+          NavigationStack {
+            ScrollView {
+              VStack(spacing: 8) {
+                if speechRecognizer.isAuthorized {
+                  if speechRecognizer.isRecognizing {
+                    Button {
+                      do {
+                        try speechRecognizer.stopRecognition()
+                        speechRecognizer.text = nil
+                      } catch {
+                        self.alertMessage = .init(message: error.localizedDescription)
+                      }
+                    } label: {
+                      HStack {
+                        Image(systemName: "stop.circle.fill")
+                        Text("Stop")
+                      }
+                    }
+                  } else {
+                    Button {
+                      do {
+                        try speechRecognizer.startRecognition()
+                      } catch {
+                        self.alertMessage = .init(message: error.localizedDescription)
+                      }
+                    } label: {
+                      HStack {
+                        Image(systemName: "play.fill")
+                        Text("Start")
+                      }
+                    }
+                  }
+                } else {
+                  Text("Please allow permission")
+                }
+
+                Picker(
+                  "Base locale", selection: $localeIdentifier,
+                  content: {
+                    ForEach(
+                      Array(
+                        SFSpeechRecognizer.supportedLocales().sorted(
+                          using: KeyPathComparator(\.identifier))
+                      ).map(\.identifier), id: \.self
+                    ) { currentLocale in
+                      Text(currentLocale).tag(currentLocale)
+                    }
+                  }
+                )
+
+                Picker(
+                  "Translate language", selection: $translateLanguageCode,
+                  content: {
+                    ForEach(supportedLanguageCodes, id: \.self) { language in
+                      Text(language).tag(language)
+                    }
+                  }
+                )
+
+                Picker(
+                  "Silent duration",
+                  selection: $speechRecognizer.resetDuration,
+                  content: {
+                    ForEach([0.5, 1, 2, 3], id: \.self) { duration in
+                      Text("\(duration)").tag(duration)
+                    }
+                  }
+                )
+              }
+            }
+          }
+        }
       }
     }
 
@@ -209,6 +213,7 @@
 
     private let baseLocaleKey = "baseLocale"
     private let translateLanguageKey = "translateLanguage"
+    private let durationKey = "silent_duration"
 
     private func save() {
       do {
@@ -221,6 +226,7 @@
       } catch {
         print("\(Self.self) error \(error.localizedDescription)")
       }
+      UserDefaults.standard.set(speechRecognizer.resetDuration, forKey: durationKey)
     }
   }
 
