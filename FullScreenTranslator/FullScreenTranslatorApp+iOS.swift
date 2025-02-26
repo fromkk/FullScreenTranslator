@@ -45,9 +45,12 @@
         translateLanguageCode = "en"
       }
 
-      let duration = UserDefaults.standard.double(forKey: durationKey)
-      if duration > 0 {
-        speechRecognizer.resetDuration = duration
+let duration = UserDefaults.standard.double(forKey: durationKey)
+if duration > 0 {
+    speechRecognizer.resetDuration = TimeInterval(duration)
+} else {
+    speechRecognizer.resetDuration = 2.0 // Default value
+}
       }
 
       speechRecognizer = SpeechRecognizer(locale: Locale(identifier: localeIdentifier))
