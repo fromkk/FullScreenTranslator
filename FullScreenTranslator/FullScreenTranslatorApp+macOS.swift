@@ -129,37 +129,11 @@
             Text("Please allow permission")
           }
 
-          Picker(
-            "Base locale", selection: $localeIdentifier,
-            content: {
-              ForEach(
-                Array(
-                  SFSpeechRecognizer.supportedLocales().sorted(
-                    using: KeyPathComparator(\.identifier))
-                ).map(\.identifier), id: \.self
-              ) { currentLocale in
-                Text(currentLocale).tag(currentLocale)
-              }
-            }
-          )
-
-          Picker(
-            "Translate language", selection: $translateLanguageCode,
-            content: {
-              ForEach(supportedLanguageCodes, id: \.self) { language in
-                Text(language).tag(language)
-              }
-            }
-          )
-
-          Picker(
-            "Silent duration",
-            selection: $speechRecognizer.resetDuration,
-            content: {
-              ForEach([0.5, 1, 2, 3], id: \.self) { duration in
-                Text("\(duration)").tag(duration)
-              }
-            }
+          ConfigurationView(
+            supportedLanguageCodes: supportedLanguageCodes,
+            localeIdentifier: $localeIdentifier,
+            translateLanguageCode: $translateLanguageCode,
+            resetDuration: $speechRecognizer.resetDuration
           )
 
           Button {

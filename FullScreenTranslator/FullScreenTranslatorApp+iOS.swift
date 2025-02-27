@@ -61,6 +61,40 @@
             VStack(spacing: 32) {
               ContentView(text: speechRecognizer.text, translated: translator.translated)
                 .frame(maxWidth: .infinity)
+
+              if speechRecognizer.isAuthorized {
+                if speechRecognizer.isRecognizing {
+                  Button {
+                    do {
+                      try speechRecognizer.stopRecognition()
+                      speechRecognizer.text = nil
+                    } catch {
+                      self.alertMessage = .init(message: error.localizedDescription)
+                    }
+                  } label: {
+                    HStack {
+                      Image(systemName: "stop.circle.fill")
+                      Text("Stop")
+                    }
+                  }
+                } else {
+                  Button {
+                    do {
+                      try speechRecognizer.startRecognition()
+                    } catch {
+                      self.alertMessage = .init(message: error.localizedDescription)
+                    }
+                  } label: {
+                    HStack {
+                      Image(systemName: "play.fill")
+                      Text("Start")
+                    }
+                  }
+                }
+              } else {
+                Text("Please allow permission")
+              }
+
               Spacer()
             }
             .padding(16)
@@ -120,74 +154,15 @@
         .sheet(isPresented: $isPresentedSettings) {
           NavigationStack {
             ScrollView {
-              VStack(spacing: 8) {
-                if speechRecognizer.isAuthorized {
-                  if speechRecognizer.isRecognizing {
-                    Button {
-                      do {
-                        try speechRecognizer.stopRecognition()
-                        speechRecognizer.text = nil
-                      } catch {
-                        self.alertMessage = .init(message: error.localizedDescription)
-                      }
-                    } label: {
-                      HStack {
-                        Image(systemName: "stop.circle.fill")
-                        Text("Stop")
-                      }
-                    }
-                  } else {
-                    Button {
-                      do {
-                        try speechRecognizer.startRecognition()
-                      } catch {
-                        self.alertMessage = .init(message: error.localizedDescription)
-                      }
-                    } label: {
-                      HStack {
-                        Image(systemName: "play.fill")
-                        Text("Start")
-                      }
-                    }
-                  }
-                } else {
-                  Text("Please allow permission")
-                }
-
-                Picker(
-                  "Base locale", selection: $localeIdentifier,
-                  content: {
-                    ForEach(
-                      Array(
-                        SFSpeechRecognizer.supportedLocales().sorted(
-                          using: KeyPathComparator(\.identifier))
-                      ).map(\.identifier), id: \.self
-                    ) { currentLocale in
-                      Text(currentLocale).tag(currentLocale)
-                    }
-                  }
-                )
-
-                Picker(
-                  "Translate language", selection: $translateLanguageCode,
-                  content: {
-                    ForEach(supportedLanguageCodes, id: \.self) { language in
-                      Text(language).tag(language)
-                    }
-                  }
-                )
-
-                Picker(
-                  "Silent duration",
-                  selection: $speechRecognizer.resetDuration,
-                  content: {
-                    ForEach([0.5, 1, 2, 3], id: \.self) { duration in
-                      Text("\(duration)").tag(duration)
-                    }
-                  }
-                )
-              }
+              ConfigurationView(
+                supportedLanguageCodes: supportedLanguageCodes,
+                localeIdentifier: $localeIdentifier,
+                translateLanguageCode: $translateLanguageCode,
+                resetDuration: $speechRecognizer.resetDuration
+              )
             }
+            .navigationTitle(Text("Settings"))
+            .navigationBarTitleDisplayMode(.inline)
           }
         }
       }
