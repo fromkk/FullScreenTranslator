@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		ADB209532D604EE4006FC30F /* FullScreenTranslator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullScreenTranslator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADE998002D6FFD8F00AF967E /* FullScreenTranslator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullScreenTranslator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		ADB209552D604EE4006FC30F /* FullScreenTranslator */ = {
+		ADE998022D6FFD8F00AF967E /* FullScreenTranslator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FullScreenTranslator;
 			sourceTree = "<group>";
@@ -19,7 +19,7 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		ADB209502D604EE4006FC30F /* Frameworks */ = {
+		ADE997FD2D6FFD8F00AF967E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -29,18 +29,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		ADB2094A2D604EE4006FC30F = {
+		ADE997F72D6FFD8F00AF967E = {
 			isa = PBXGroup;
 			children = (
-				ADB209552D604EE4006FC30F /* FullScreenTranslator */,
-				ADB209542D604EE4006FC30F /* Products */,
+				ADE998022D6FFD8F00AF967E /* FullScreenTranslator */,
+				ADE998012D6FFD8F00AF967E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		ADB209542D604EE4006FC30F /* Products */ = {
+		ADE998012D6FFD8F00AF967E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ADB209532D604EE4006FC30F /* FullScreenTranslator.app */,
+				ADE998002D6FFD8F00AF967E /* FullScreenTranslator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,65 +48,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ADB209522D604EE4006FC30F /* FullScreenTranslator */ = {
+		ADE997FF2D6FFD8F00AF967E /* FullScreenTranslator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ADB209622D604EE7006FC30F /* Build configuration list for PBXNativeTarget "FullScreenTranslator" */;
+			buildConfigurationList = ADE9980E2D6FFD9100AF967E /* Build configuration list for PBXNativeTarget "FullScreenTranslator" */;
 			buildPhases = (
-				ADB2094F2D604EE4006FC30F /* Sources */,
-				ADB209502D604EE4006FC30F /* Frameworks */,
-				ADB209512D604EE4006FC30F /* Resources */,
+				ADE997FC2D6FFD8F00AF967E /* Sources */,
+				ADE997FD2D6FFD8F00AF967E /* Frameworks */,
+				ADE997FE2D6FFD8F00AF967E /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				ADB209552D604EE4006FC30F /* FullScreenTranslator */,
+				ADE998022D6FFD8F00AF967E /* FullScreenTranslator */,
 			);
 			name = FullScreenTranslator;
 			packageProductDependencies = (
 			);
 			productName = FullScreenTranslator;
-			productReference = ADB209532D604EE4006FC30F /* FullScreenTranslator.app */;
+			productReference = ADE998002D6FFD8F00AF967E /* FullScreenTranslator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		ADB2094B2D604EE4006FC30F /* Project object */ = {
+		ADE997F82D6FFD8F00AF967E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					ADB209522D604EE4006FC30F = {
+					ADE997FF2D6FFD8F00AF967E = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
-			buildConfigurationList = ADB2094E2D604EE4006FC30F /* Build configuration list for PBXProject "FullScreenTranslator" */;
+			buildConfigurationList = ADE997FB2D6FFD8F00AF967E /* Build configuration list for PBXProject "FullScreenTranslator" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
-				ja,
 			);
-			mainGroup = ADB2094A2D604EE4006FC30F;
+			mainGroup = ADE997F72D6FFD8F00AF967E;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = ADB209542D604EE4006FC30F /* Products */;
+			productRefGroup = ADE998012D6FFD8F00AF967E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ADB209522D604EE4006FC30F /* FullScreenTranslator */,
+				ADE997FF2D6FFD8F00AF967E /* FullScreenTranslator */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		ADB209512D604EE4006FC30F /* Resources */ = {
+		ADE997FE2D6FFD8F00AF967E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -116,7 +115,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		ADB2094F2D604EE4006FC30F /* Sources */ = {
+		ADE997FC2D6FFD8F00AF967E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -126,7 +125,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		ADB209602D604EE7006FC30F /* Debug */ = {
+		ADE9980C2D6FFD9100AF967E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -178,19 +177,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		ADB209612D604EE7006FC30F /* Release */ = {
+		ADE9980D2D6FFD9100AF967E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -236,108 +234,110 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		ADB209632D604EE7006FC30F /* Debug */ = {
+		ADE9980F2D6FFD9100AF967E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = FullScreenTranslator/FullScreenTranslator.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FullScreenTranslator/Preview Content\"";
 				DEVELOPMENT_TEAM = K84E4S7G4C;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Use microphone for tranlating";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Use speech recognition to translate";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
+					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.fromkk.FullScreenTranslator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		ADB209642D604EE7006FC30F /* Release */ = {
+		ADE998102D6FFD9100AF967E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = FullScreenTranslator/FullScreenTranslator.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FullScreenTranslator/Preview Content\"";
 				DEVELOPMENT_TEAM = K84E4S7G4C;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Use microphone for tranlating";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Use speech recognition to translate";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
+					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.fromkk.FullScreenTranslator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ADB2094E2D604EE4006FC30F /* Build configuration list for PBXProject "FullScreenTranslator" */ = {
+		ADE997FB2D6FFD8F00AF967E /* Build configuration list for PBXProject "FullScreenTranslator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ADB209602D604EE7006FC30F /* Debug */,
-				ADB209612D604EE7006FC30F /* Release */,
+				ADE9980C2D6FFD9100AF967E /* Debug */,
+				ADE9980D2D6FFD9100AF967E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ADB209622D604EE7006FC30F /* Build configuration list for PBXNativeTarget "FullScreenTranslator" */ = {
+		ADE9980E2D6FFD9100AF967E /* Build configuration list for PBXNativeTarget "FullScreenTranslator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ADB209632D604EE7006FC30F /* Debug */,
-				ADB209642D604EE7006FC30F /* Release */,
+				ADE9980F2D6FFD9100AF967E /* Debug */,
+				ADE998102D6FFD9100AF967E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = ADB2094B2D604EE4006FC30F /* Project object */;
+	rootObject = ADE997F82D6FFD8F00AF967E /* Project object */;
 }

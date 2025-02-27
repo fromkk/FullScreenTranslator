@@ -21,7 +21,8 @@
     init() {
       if let data = UserDefaults.standard.data(forKey: baseLocaleKey) {
         do {
-          localeIdentifier = try JSONDecoder().decode(Locale.self, from: data).identifier
+          localeIdentifier = try JSONDecoder().decode(Locale.self, from: data)
+            .identifier
         } catch {
           print("\(Self.self) error \(error.localizedDescription)")
           localeIdentifier = Locale.current.identifier
@@ -34,7 +35,8 @@
       if let data = UserDefaults.standard.data(forKey: translateLanguageKey) {
         do {
           translateLanguageCode =
-            try JSONDecoder().decode(Locale.Language.self, from: data).languageCode?.identifier
+            try JSONDecoder().decode(Locale.Language.self, from: data)
+            .languageCode?.identifier
             ?? "en"
         } catch {
           print("\(Self.self)error \(error.localizedDescription)")
@@ -45,15 +47,15 @@
         translateLanguageCode = "en"
       }
 
-let duration = UserDefaults.standard.double(forKey: durationKey)
-if duration > 0 {
-    speechRecognizer.resetDuration = TimeInterval(duration)
-} else {
-    speechRecognizer.resetDuration = 2.0 // Default value
-}
+      let duration = UserDefaults.standard.double(forKey: durationKey)
+      if duration > 0 {
+        speechRecognizer.resetDuration = TimeInterval(duration)
+      } else {
+        speechRecognizer.resetDuration = 2.0  // Default value
       }
 
-      speechRecognizer = SpeechRecognizer(locale: Locale(identifier: localeIdentifier))
+      speechRecognizer = SpeechRecognizer(
+        locale: Locale(identifier: localeIdentifier))
       speechRecognizer.requestAuthorization()
     }
 
@@ -62,8 +64,10 @@ if duration > 0 {
         NavigationStack {
           ScrollView {
             VStack(spacing: 32) {
-              ContentView(text: speechRecognizer.text, translated: translator.translated)
-                .frame(maxWidth: .infinity)
+              ContentView(
+                text: speechRecognizer.text, translated: translator.translated
+              )
+              .frame(maxWidth: .infinity)
 
               if speechRecognizer.isAuthorized {
                 if speechRecognizer.isRecognizing {
@@ -72,7 +76,8 @@ if duration > 0 {
                       try speechRecognizer.stopRecognition()
                       speechRecognizer.text = nil
                     } catch {
-                      self.alertMessage = .init(message: error.localizedDescription)
+                      self.alertMessage = .init(
+                        message: error.localizedDescription)
                     }
                   } label: {
                     HStack {
@@ -85,7 +90,8 @@ if duration > 0 {
                     do {
                       try speechRecognizer.startRecognition()
                     } catch {
-                      self.alertMessage = .init(message: error.localizedDescription)
+                      self.alertMessage = .init(
+                        message: error.localizedDescription)
                     }
                   } label: {
                     HStack {
@@ -118,13 +124,16 @@ if duration > 0 {
         .task {
           let availability = LanguageAvailability()
           supportedLanguageCodes = Set(
-            await availability.supportedLanguages.compactMap { $0.languageCode?.identifier }
+            await availability.supportedLanguages.compactMap {
+              $0.languageCode?.identifier
+            }
           )
           .sorted(using: KeyPathComparator(\.self))
           updateTranslateConfiguration()
         }
         .onChange(of: localeIdentifier) { oldValue, newValue in
-          speechRecognizer = SpeechRecognizer(locale: Locale(identifier: newValue))
+          speechRecognizer = SpeechRecognizer(
+            locale: Locale(identifier: newValue))
           speechRecognizer.requestAuthorization()
           save()
           updateTranslateConfiguration()
@@ -147,7 +156,9 @@ if duration > 0 {
             }
           }
         }
-        .alert("Not supported language", isPresented: $notSupported, actions: {})
+        .alert(
+          "Not supported language", isPresented: $notSupported, actions: {}
+        )
         .alert(
           item: $alertMessage,
           content: { alertMessage in
@@ -174,13 +185,16 @@ if duration > 0 {
     private func updateTranslateConfiguration() {
       Task {
         let locale = Locale(identifier: localeIdentifier)
-        let translateLanguage = Locale.Language(identifier: translateLanguageCode)
-        let status = await languageAvailability.status(from: locale.language, to: translateLanguage)
+        let translateLanguage = Locale.Language(
+          identifier: translateLanguageCode)
+        let status = await languageAvailability.status(
+          from: locale.language, to: translateLanguage)
         print("\(Self.self).updateTranslateConfiguration status: \(status)")
         switch status {
         case .installed, .supported:
           configuration?.invalidate()
-          configuration = .init(source: locale.language, target: translateLanguage)
+          configuration = .init(
+            source: locale.language, target: translateLanguage)
         case .unsupported:
           notSupported = true
         @unknown default:
@@ -195,16 +209,19 @@ if duration > 0 {
 
     private func save() {
       do {
-        let localeData = try JSONEncoder().encode(Locale(identifier: localeIdentifier))
+        let localeData = try JSONEncoder().encode(
+          Locale(identifier: localeIdentifier))
         UserDefaults.standard.set(localeData, forKey: baseLocaleKey)
 
         let translateLanguageData = try JSONEncoder().encode(
           Locale.Language(identifier: translateLanguageCode))
-        UserDefaults.standard.set(translateLanguageData, forKey: translateLanguageKey)
+        UserDefaults.standard.set(
+          translateLanguageData, forKey: translateLanguageKey)
       } catch {
         print("\(Self.self) error \(error.localizedDescription)")
       }
-      UserDefaults.standard.set(speechRecognizer.resetDuration, forKey: durationKey)
+      UserDefaults.standard.set(
+        speechRecognizer.resetDuration, forKey: durationKey)
     }
   }
 
