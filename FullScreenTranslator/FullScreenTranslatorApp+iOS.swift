@@ -5,40 +5,6 @@
   import SwiftUI
   import Translation
 
-  struct SubtitlesView: View {
-    var text: String
-    var translated: String?
-
-    var body: some View {
-      VStack {
-        VStack(spacing: 8) {
-          Text(text)
-            .font(.system(size: 24, weight: .bold))
-            .frame(maxWidth: .infinity, alignment: .center)
-            .multilineTextAlignment(.center)
-
-          if let translated {
-            Text(translated)
-              .font(.system(size: 48, weight: .bold))
-              .frame(maxWidth: .infinity, alignment: .center)
-              .multilineTextAlignment(.center)
-          }
-        }
-      }
-    }
-  }
-
-  struct ContentView: View {
-    var text: String?
-    var translated: String?
-
-    var body: some View {
-      if let text {
-        SubtitlesView(text: text, translated: translated)
-      }
-    }
-  }
-
   @main
   struct FullScreenTranslatorApp: App {
     @State var alertMessage: AlertMessage?
@@ -50,6 +16,7 @@
     @State var configuration: TranslationSession.Configuration?
     private let languageAvailability = LanguageAvailability()
     @State var notSupported: Bool = false
+    @State var isPresentedSettings: Bool = false
 
     init() {
       if let data = UserDefaults.standard.data(forKey: baseLocaleKey) {
@@ -78,18 +45,26 @@
         translateLanguageCode = "en"
       }
 
+let duration = UserDefaults.standard.double(forKey: durationKey)
+if duration > 0 {
+    speechRecognizer.resetDuration = TimeInterval(duration)
+} else {
+    speechRecognizer.resetDuration = 2.0 // Default value
+}
+      }
+
       speechRecognizer = SpeechRecognizer(locale: Locale(identifier: localeIdentifier))
       speechRecognizer.requestAuthorization()
     }
 
     var body: some Scene {
       WindowGroup {
-        ScrollView {
-          VStack(spacing: 32) {
-            ContentView(text: speechRecognizer.text, translated: translator.translated)
-              .frame(maxWidth: .infinity)
+        NavigationStack {
+          ScrollView {
+            VStack(spacing: 32) {
+              ContentView(text: speechRecognizer.text, translated: translator.translated)
+                .frame(maxWidth: .infinity)
 
-            VStack(spacing: 8) {
               if speechRecognizer.isAuthorized {
                 if speechRecognizer.isRecognizing {
                   Button {
@@ -123,28 +98,20 @@
                 Text("Please allow permission")
               }
 
-              Picker(
-                "Base locale", selection: $localeIdentifier,
-                content: {
-                  ForEach(
-                    Array(
-                      SFSpeechRecognizer.supportedLocales().sorted(
-                        using: KeyPathComparator(\.identifier))
-                    ).map(\.identifier), id: \.self
-                  ) { currentLocale in
-                    Text(currentLocale).tag(currentLocale)
-                  }
-                }
-              )
-
-              Picker(
-                "Translate language", selection: $translateLanguageCode,
-                content: {
-                  ForEach(supportedLanguageCodes, id: \.self) { language in
-                    Text(language).tag(language)
-                  }
-                }
-              )
+              Spacer()
+            }
+            .padding(16)
+          }
+          .navigationTitle(Text("FullScreenTranslator"))
+          .navigationBarTitleDisplayMode(.inline)
+          .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+              Button {
+                isPresentedSettings = true
+              } label: {
+                Image(systemName: "gear")
+              }
+              .accessibilityLabel("Settings")
             }
           }
         }
@@ -185,7 +152,22 @@
           item: $alertMessage,
           content: { alertMessage in
             Alert(title: Text(alertMessage.message))
-          })
+          }
+        )
+        .sheet(isPresented: $isPresentedSettings) {
+          NavigationStack {
+            ScrollView {
+              ConfigurationView(
+                supportedLanguageCodes: supportedLanguageCodes,
+                localeIdentifier: $localeIdentifier,
+                translateLanguageCode: $translateLanguageCode,
+                resetDuration: $speechRecognizer.resetDuration
+              )
+            }
+            .navigationTitle(Text("Settings"))
+            .navigationBarTitleDisplayMode(.inline)
+          }
+        }
       }
     }
 
@@ -209,6 +191,7 @@
 
     private let baseLocaleKey = "baseLocale"
     private let translateLanguageKey = "translateLanguage"
+    private let durationKey = "silent_duration"
 
     private func save() {
       do {
@@ -221,6 +204,7 @@
       } catch {
         print("\(Self.self) error \(error.localizedDescription)")
       }
+      UserDefaults.standard.set(speechRecognizer.resetDuration, forKey: durationKey)
     }
   }
 

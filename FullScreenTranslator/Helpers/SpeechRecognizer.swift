@@ -21,7 +21,7 @@ import Speech
   private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
   private var recognitionTask: SFSpeechRecognitionTask?
 
-  private let resetDuration: TimeInterval = 2.0
+  var resetDuration: TimeInterval = 2.0
   private var resetTimer: Timer?
 
   func requestAuthorization() {

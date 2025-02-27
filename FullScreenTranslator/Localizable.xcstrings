@@ -1,6 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f"
+          }
+        }
+      }
+    },
     "Base locale" : {
       "localizations" : {
         "ja" : {
@@ -10,6 +26,9 @@
           }
         }
       }
+    },
+    "FullScreenTranslator" : {
+
     },
     "Not supported language" : {
       "localizations" : {
@@ -37,6 +56,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "終了"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        }
+      }
+    },
+    "Silent duration" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空白時間"
           }
         }
       }

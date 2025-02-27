@@ -28,61 +28,6 @@
     }
   }
 
-  struct SubtitlesView: View {
-    var text: String
-    var translated: String?
-
-    var body: some View {
-      VStack {
-        Spacer()  // 画面上部の余白
-        VStack(spacing: 8) {
-          Text(text)
-            .font(.system(size: 24, weight: .bold))
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .multilineTextAlignment(.center)
-
-          if let translated {
-            Text(translated)
-              .font(.system(size: 48, weight: .bold))
-              .foregroundColor(.white)
-              .frame(maxWidth: .infinity, alignment: .center)
-              .multilineTextAlignment(.center)
-          }
-        }
-        .background(Color.black.opacity(0.6))
-      }
-      .ignoresSafeArea()
-    }
-  }
-
-  struct ContentView: View {
-    var text: String?
-    var translated: String?
-
-    var body: some View {
-      ZStack {
-        if let text {
-          SubtitlesView(text: text, translated: translated)
-        }
-        WindowAccessor(text: text) { window in
-          if let window = window {
-            window.isOpaque = false
-            window.backgroundColor = .clear
-            window.styleMask = [.borderless]
-            window.level = .screenSaver
-            window.ignoresMouseEvents = true
-            window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-            if let screenFrame = NSScreen.main?.frame {
-              window.setFrame(screenFrame, display: true)
-            }
-          }
-        }
-      }
-      .ignoresSafeArea()
-    }
-  }
-
   @main
   struct FullScreenTranslatorApp: App {
     @State var alertMessage: AlertMessage?
@@ -184,27 +129,11 @@
             Text("Please allow permission")
           }
 
-          Picker(
-            "Base locale", selection: $localeIdentifier,
-            content: {
-              ForEach(
-                Array(
-                  SFSpeechRecognizer.supportedLocales().sorted(
-                    using: KeyPathComparator(\.identifier))
-                ).map(\.identifier), id: \.self
-              ) { currentLocale in
-                Text(currentLocale).tag(currentLocale)
-              }
-            }
-          )
-
-          Picker(
-            "Translate language", selection: $translateLanguageCode,
-            content: {
-              ForEach(supportedLanguageCodes, id: \.self) { language in
-                Text(language).tag(language)
-              }
-            }
+          ConfigurationView(
+            supportedLanguageCodes: supportedLanguageCodes,
+            localeIdentifier: $localeIdentifier,
+            translateLanguageCode: $translateLanguageCode,
+            resetDuration: $speechRecognizer.resetDuration
           )
 
           Button {
