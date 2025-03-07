@@ -15,39 +15,30 @@
     @State var translator: Translator = .init()
     @State var configuration: TranslationSession.Configuration?
     private let languageAvailability = LanguageAvailability()
-    @State var notSupported: Bool = false
+    @State var notSupportedAlertPresented: Bool = false
+    @State var isSupported: Bool = false
     @State var isPresentedSettings: Bool = false
 
+    private let configurationStore = ConfigurationStoreImpl()
+
     init() {
-      if let data = UserDefaults.standard.data(forKey: baseLocaleKey) {
-        do {
-          localeIdentifier = try JSONDecoder().decode(Locale.self, from: data)
-            .identifier
-        } catch {
-          print("\(Self.self) error \(error.localizedDescription)")
-          localeIdentifier = Locale.current.identifier
-          self.alertMessage = .init(message: error.localizedDescription)
-        }
-      } else {
+      do {
+        localeIdentifier =
+          try configurationStore.storedLocale?.identifier ?? Locale.current.identifier
+      } catch {
         localeIdentifier = Locale.current.identifier
+        self.alertMessage = .init(message: error.localizedDescription)
       }
 
-      if let data = UserDefaults.standard.data(forKey: translateLanguageKey) {
-        do {
-          translateLanguageCode =
-            try JSONDecoder().decode(Locale.Language.self, from: data)
-            .languageCode?.identifier
-            ?? "en"
-        } catch {
-          print("\(Self.self)error \(error.localizedDescription)")
-          translateLanguageCode = "en"
-          self.alertMessage = .init(message: error.localizedDescription)
-        }
-      } else {
+      do {
+        translateLanguageCode =
+          try configurationStore.storedTranslateLanguage?.languageCode?.identifier ?? "en"
+      } catch {
         translateLanguageCode = "en"
+        self.alertMessage = .init(message: error.localizedDescription)
       }
 
-      let duration = UserDefaults.standard.double(forKey: durationKey)
+      let duration = configurationStore.storedDuration
       if duration > 0 {
         speechRecognizer.resetDuration = TimeInterval(duration)
       } else {
@@ -70,7 +61,9 @@
               .frame(maxWidth: .infinity)
 
               if speechRecognizer.isAuthorized {
-                if speechRecognizer.isRecognizing {
+                if !isSupported {
+                  Text("Not supported language")
+                } else if speechRecognizer.isRecognizing {
                   Button {
                     do {
                       try speechRecognizer.stopRecognition()
@@ -157,7 +150,7 @@
           }
         }
         .alert(
-          "Not supported language", isPresented: $notSupported, actions: {}
+          "Not supported language", isPresented: $notSupportedAlertPresented, actions: {}
         )
         .alert(
           item: $alertMessage,
@@ -195,33 +188,25 @@
           configuration?.invalidate()
           configuration = .init(
             source: locale.language, target: translateLanguage)
+          isSupported = true
         case .unsupported:
-          notSupported = true
+          notSupportedAlertPresented = true
+          isSupported = false
         @unknown default:
           return
         }
       }
     }
 
-    private let baseLocaleKey = "baseLocale"
-    private let translateLanguageKey = "translateLanguage"
-    private let durationKey = "silent_duration"
-
     private func save() {
       do {
-        let localeData = try JSONEncoder().encode(
-          Locale(identifier: localeIdentifier))
-        UserDefaults.standard.set(localeData, forKey: baseLocaleKey)
-
-        let translateLanguageData = try JSONEncoder().encode(
-          Locale.Language(identifier: translateLanguageCode))
-        UserDefaults.standard.set(
-          translateLanguageData, forKey: translateLanguageKey)
+        try configurationStore.store(locale: Locale(identifier: localeIdentifier))
+        try configurationStore.store(
+          translateLanguage: Locale.Language(identifier: translateLanguageCode))
       } catch {
         print("\(Self.self) error \(error.localizedDescription)")
       }
-      UserDefaults.standard.set(
-        speechRecognizer.resetDuration, forKey: durationKey)
+      configurationStore.store(duration: speechRecognizer.resetDuration)
     }
   }
 
