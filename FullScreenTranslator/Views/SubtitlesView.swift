@@ -12,12 +12,14 @@ import SwiftUI
             .font(.system(.body, weight: .regular))
             .frame(maxWidth: .infinity, alignment: .center)
             .multilineTextAlignment(.center)
+            .textSelection(.enabled)
 
           if let translated {
             Text(translated)
               .font(.system(.headline, weight: .medium))
               .frame(maxWidth: .infinity, alignment: .center)
               .multilineTextAlignment(.center)
+              .textSelection(.enabled)
           }
         }
       }
