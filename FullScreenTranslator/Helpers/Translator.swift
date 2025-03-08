@@ -20,7 +20,11 @@ import Translation
     lastTask?.cancel()
     self.lastTask = Task {
       do {
-        self.translated = try await session.translate(text).targetText
+        let result = try await session.translate(text).targetText
+        // UIに影響するプロパティの更新はメインスレッドで行う
+        await MainActor.run {
+          self.translated = result
+        }
         print("\(Self.self).translate \(self.translated ?? "no result")")
       } catch {
         print("\(Self.self).error \(error.localizedDescription)")

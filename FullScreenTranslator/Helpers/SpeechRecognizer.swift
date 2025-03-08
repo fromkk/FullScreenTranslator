@@ -26,7 +26,10 @@ import Speech
 
   func requestAuthorization() {
     SFSpeechRecognizer.requestAuthorization { [weak self] status in
-      self?.isAuthorized = status == .authorized
+      // メインスレッドでObservableプロパティを更新
+      DispatchQueue.main.async {
+        self?.isAuthorized = status == .authorized
+      }
     }
   }
 
@@ -60,17 +63,21 @@ import Speech
     recognitionTask = recognizer.recognitionTask(with: recognitionRequest) {
       [weak self] result, error in
       guard let self = self else { return }
-      if let result = result {
-        self.text = result.bestTranscription.formattedString
-        print("recognized: \(self.text ?? "no text")")
-        self.resetTimerStart()
-      }
-      if error != nil || (result?.isFinal ?? false) {
-        self.audioEngine.stop()
-        node.removeTap(onBus: 0)
-        self.recognitionRequest = nil
-        self.recognitionTask = nil
-        self.isRecognizing = false
+
+      // UIに影響を与えるプロパティ更新はメインスレッドで実行
+      DispatchQueue.main.async {
+        if let result = result {
+          self.text = result.bestTranscription.formattedString
+          print("recognized: \(self.text ?? "no text")")
+          self.resetTimerStart()
+        }
+        if error != nil || (result?.isFinal ?? false) {
+          self.audioEngine.stop()
+          node.removeTap(onBus: 0)
+          self.recognitionRequest = nil
+          self.recognitionTask = nil
+          self.isRecognizing = false
+        }
       }
     }
 
@@ -103,9 +110,24 @@ import Speech
         guard let self else { return }
         Task {
           do {
-            try self.stopRecognition()
+            // メインスレッドで実行する必要があるメソッドを安全に呼び出す
+            await MainActor.run {
+              do {
+                try self.stopRecognition()
+              } catch {
+                print("\(Self.self) stopRecognition error \(error.localizedDescription)")
+              }
+            }
+
             try await Task.sleep(for: .seconds(0.1))
-            try self.startRecognition()
+
+            await MainActor.run {
+              do {
+                try self.startRecognition()
+              } catch {
+                print("\(Self.self) startRecognition error \(error.localizedDescription)")
+              }
+            }
           } catch {
             print("\(Self.self) error \(error.localizedDescription)")
           }
