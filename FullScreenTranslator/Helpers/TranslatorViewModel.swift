@@ -45,12 +45,12 @@ import Translation
       self.alertMessage = .init(message: error.localizedDescription)
     }
 
-    let duration = configurationStore.storedDuration
-    let resetDuration = duration > 0 ? TimeInterval(duration) : 2.0
-
     // SpeechRecognizer の初期化に localeIdentifier を使用
     speechRecognizer = SpeechRecognizer(locale: Locale(identifier: initialLocaleIdentifier))
-    speechRecognizer.resetDuration = resetDuration
+
+    // 保存されたresetDurationを取得して設定
+    let duration = configurationStore.storedDuration
+    speechRecognizer.resetDuration = duration > 0 ? duration : 2.0
     speechRecognizer.requestAuthorization()
   }
 

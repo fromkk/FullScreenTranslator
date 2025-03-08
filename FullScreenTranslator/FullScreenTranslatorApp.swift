@@ -72,6 +72,9 @@ struct FullScreenTranslatorApp: App {
           viewModel.save()
           viewModel.updateTranslateConfiguration()
         }
+        .onChange(of: viewModel.speechRecognizer.resetDuration) { oldValue, newValue in
+          viewModel.save()
+        }
         .onChange(of: viewModel.speechRecognizer.text) { oldValue, newValue in
           viewModel.translateText(newValue)
         }
@@ -193,6 +196,9 @@ struct FullScreenTranslatorApp: App {
           .onChange(of: viewModel.translateLanguageCode) { oldValue, newValue in
             viewModel.save()
             viewModel.updateTranslateConfiguration()
+          }
+          .onChange(of: viewModel.speechRecognizer.resetDuration) { oldValue, newValue in
+            viewModel.save()
           }
           .onChange(of: viewModel.speechRecognizer.text) { oldValue, newValue in
             viewModel.translateText(newValue)
