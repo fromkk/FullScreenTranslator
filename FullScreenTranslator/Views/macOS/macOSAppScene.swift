@@ -13,7 +13,6 @@ import SwiftUI
           translated: viewModel.translator.translated
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .translatorViewModifiers(viewModel: viewModel)
       }
       .windowStyle(HiddenTitleBarWindowStyle())
 
