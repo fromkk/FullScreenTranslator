@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		AD8F0A262D7C9192000EEE51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADE997F82D6FFD8F00AF967E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ADE997FF2D6FFD8F00AF967E;
+			remoteInfo = FullScreenTranslator;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		AD8F0A222D7C9192000EEE51 /* FullScreenTranslatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FullScreenTranslatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE998002D6FFD8F00AF967E /* FullScreenTranslator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullScreenTranslator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		AD8F0A232D7C9192000EEE51 /* FullScreenTranslatorTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FullScreenTranslatorTests;
+			sourceTree = "<group>";
+		};
 		ADE998022D6FFD8F00AF967E /* FullScreenTranslator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FullScreenTranslator;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AD8F0A1F2D7C9192000EEE51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE997FD2D6FFD8F00AF967E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				ADE998022D6FFD8F00AF967E /* FullScreenTranslator */,
+				AD8F0A232D7C9192000EEE51 /* FullScreenTranslatorTests */,
 				ADE998012D6FFD8F00AF967E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				ADE998002D6FFD8F00AF967E /* FullScreenTranslator.app */,
+				AD8F0A222D7C9192000EEE51 /* FullScreenTranslatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AD8F0A212D7C9192000EEE51 /* FullScreenTranslatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8F0A282D7C9192000EEE51 /* Build configuration list for PBXNativeTarget "FullScreenTranslatorTests" */;
+			buildPhases = (
+				AD8F0A1E2D7C9192000EEE51 /* Sources */,
+				AD8F0A1F2D7C9192000EEE51 /* Frameworks */,
+				AD8F0A202D7C9192000EEE51 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD8F0A272D7C9192000EEE51 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AD8F0A232D7C9192000EEE51 /* FullScreenTranslatorTests */,
+			);
+			name = FullScreenTranslatorTests;
+			packageProductDependencies = (
+			);
+			productName = FullScreenTranslatorTests;
+			productReference = AD8F0A222D7C9192000EEE51 /* FullScreenTranslatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		ADE997FF2D6FFD8F00AF967E /* FullScreenTranslator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADE9980E2D6FFD9100AF967E /* Build configuration list for PBXNativeTarget "FullScreenTranslator" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					AD8F0A212D7C9192000EEE51 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = ADE997FF2D6FFD8F00AF967E;
+					};
 					ADE997FF2D6FFD8F00AF967E = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				ADE997FF2D6FFD8F00AF967E /* FullScreenTranslator */,
+				AD8F0A212D7C9192000EEE51 /* FullScreenTranslatorTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AD8F0A202D7C9192000EEE51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE997FE2D6FFD8F00AF967E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD8F0A1E2D7C9192000EEE51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE997FC2D6FFD8F00AF967E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,53 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AD8F0A272D7C9192000EEE51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ADE997FF2D6FFD8F00AF967E /* FullScreenTranslator */;
+			targetProxy = AD8F0A262D7C9192000EEE51 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		AD8F0A292D7C9192000EEE51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K84E4S7G4C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.fromkk.FullScreenTranslatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FullScreenTranslator.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FullScreenTranslator";
+			};
+			name = Debug;
+		};
+		AD8F0A2A2D7C9192000EEE51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K84E4S7G4C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.fromkk.FullScreenTranslatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FullScreenTranslator.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FullScreenTranslator";
+			};
+			name = Release;
+		};
 		ADE9980C2D6FFD9100AF967E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -319,6 +432,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AD8F0A282D7C9192000EEE51 /* Build configuration list for PBXNativeTarget "FullScreenTranslatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8F0A292D7C9192000EEE51 /* Debug */,
+				AD8F0A2A2D7C9192000EEE51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ADE997FB2D6FFD8F00AF967E /* Build configuration list for PBXProject "FullScreenTranslator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

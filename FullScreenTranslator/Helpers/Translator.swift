@@ -1,6 +1,12 @@
 import Translation
 
-@Observable class Translator {
+protocol TranslatorProtocol: Observable {
+  var translated: String? { get }
+  func setSession(_ session: TranslationSession)
+  func translate(_ text: String)
+}
+
+@Observable class Translator: TranslatorProtocol {
   private var session: TranslationSession?
 
   func setSession(_ session: TranslationSession) {

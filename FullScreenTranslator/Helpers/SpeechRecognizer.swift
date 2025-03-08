@@ -1,7 +1,18 @@
 import AVFoundation
 import Speech
 
-@Observable final class SpeechRecognizer {
+protocol SpeechRecognizerProtocol: Observable {
+  var isRecognizing: Bool { get }
+  var isAuthorized: Bool { get }
+  var text: String? { get set }
+  var resetDuration: TimeInterval { get set }
+
+  func requestAuthorization()
+  func startRecognition() throws
+  func stopRecognition() throws
+}
+
+@Observable final class SpeechRecognizer: SpeechRecognizerProtocol {
   init(locale: Locale = .current) {
     self.recognizer = SFSpeechRecognizer(locale: locale)!
   }
