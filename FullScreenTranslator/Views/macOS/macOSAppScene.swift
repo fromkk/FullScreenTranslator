@@ -20,10 +20,11 @@ import SwiftUI
       MenuBarExtra(
         content: {
           if !viewModel.speechRecognizer.isAuthorized {
-            WarningMessage(text: "Microphone access required", systemName: "mic.slash.fill")
+            WarningMessage(systemName: "mic.slash.fill", text: "Microphone access required")
           } else if !viewModel.isSupported {
             WarningMessage(
-              text: "Unsupported language combination", systemName: "exclamationmark.triangle.fill")
+              systemName: "exclamationmark.triangle.fill",
+              text: "Unsupported language combination")
           } else {
             TranslatorControlButtons(viewModel: viewModel)
           }
