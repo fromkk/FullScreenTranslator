@@ -6,9 +6,7 @@ import SwiftUI
     var translated: String?
 
     var body: some View {
-      if let text {
-        SubtitlesView(text: text, translated: translated)
-      }
+      SubtitlesView(text: text ?? "", translated: translated)
     }
   }
 #elseif canImport(AppKit)
