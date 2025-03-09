@@ -11,13 +11,23 @@ import SwiftUI
         NavigationStack {
           ScrollView {
             VStack(spacing: 32) {
+              if !viewModel.speechRecognizer.isAuthorized {
+                WarningMessage(systemName: "mic.slash.fill", text: "Microphone access required")
+              } else if !viewModel.isSupported {
+                WarningMessage(
+                  systemName: "exclamationmark.triangle.fill",
+                  text: "Unsupported language combination")
+              }
+
               ContentView(
                 text: viewModel.speechRecognizer.text,
                 translated: viewModel.translator.translated
               )
               .frame(maxWidth: .infinity)
 
-              TranslatorControlButtons(viewModel: viewModel)
+              if viewModel.speechRecognizer.isAuthorized, viewModel.isSupported {
+                TranslatorControlButtons(viewModel: viewModel)
+              }
 
               Spacer()
             }
