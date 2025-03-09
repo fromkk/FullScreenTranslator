@@ -24,22 +24,20 @@ import SwiftUI
               .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
           }
 
-          if let translated {
-            VStack(spacing: 8) {
-              Text("Translation")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+          VStack(spacing: 8) {
+            Text("Translation")
+              .font(.caption)
+              .foregroundStyle(.secondary)
 
-              Text(translated)
-                .font(.system(.headline, weight: .semibold))
-                .frame(maxWidth: .infinity, alignment: .center)
-                .multilineTextAlignment(.center)
-                .textSelection(.enabled)
-                .padding()
-                .background(Color.blue.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-            }
+            Text(translated ?? "")
+              .font(.system(.headline, weight: .semibold))
+              .frame(maxWidth: .infinity, alignment: .center)
+              .multilineTextAlignment(.center)
+              .textSelection(.enabled)
+              .padding()
+              .background(Color.blue.opacity(0.1))
+              .clipShape(RoundedRectangle(cornerRadius: 12))
+              .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
           }
         }
       }
