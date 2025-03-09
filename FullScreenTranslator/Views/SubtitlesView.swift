@@ -7,22 +7,43 @@ import SwiftUI
 
     var body: some View {
       VStack {
-        VStack(spacing: 8) {
-          Text(text)
-            .font(.system(.body, weight: .regular))
-            .frame(maxWidth: .infinity, alignment: .center)
-            .multilineTextAlignment(.center)
-            .textSelection(.enabled)
+        VStack(spacing: 16) {
+          VStack(spacing: 8) {
+            Text("Original")
+              .font(.caption)
+              .foregroundStyle(.secondary)
 
-          if let translated {
-            Text(translated)
-              .font(.system(.headline, weight: .medium))
+            Text(text)
+              .font(.system(.body, weight: .medium))
               .frame(maxWidth: .infinity, alignment: .center)
               .multilineTextAlignment(.center)
               .textSelection(.enabled)
+              .padding()
+              .background(Color(.systemBackground))
+              .clipShape(RoundedRectangle(cornerRadius: 12))
+              .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+          }
+
+          if let translated {
+            VStack(spacing: 8) {
+              Text("Translation")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+              Text(translated)
+                .font(.system(.headline, weight: .semibold))
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+                .textSelection(.enabled)
+                .padding()
+                .background(Color.blue.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+            }
           }
         }
       }
+      .padding(.horizontal)
     }
   }
 #elseif canImport(AppKit)
