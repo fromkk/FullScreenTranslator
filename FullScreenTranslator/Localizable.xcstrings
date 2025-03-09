@@ -28,24 +28,41 @@
       }
     },
     "FullScreenTranslator" : {
-
-    },
-    "Not supported language" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "サポートされていない言語の組み合わせです"
+            "value" : "全画面翻訳"
           }
         }
       }
     },
-    "Please allow permission" : {
+    "Microphone access required" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "権限を許可してください"
+            "value" : "マイクへのアクセスが必要です"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Original" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オリジナル"
           }
         }
       }
@@ -100,12 +117,62 @@
         }
       }
     },
+    "The selected language combination is not supported for translation. Please choose different languages in settings." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択された言語の組み合わせは翻訳に対応していません。設定から別の言語を選択してください。"
+          }
+        }
+      }
+    },
     "Translate language" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "翻訳言語"
+          }
+        }
+      }
+    },
+    "Translation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳"
+          }
+        }
+      }
+    },
+    "Unsupported Language" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サポートされていない言語です"
+          }
+        }
+      }
+    },
+    "Unsupported language combination" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サポートされていない言語の組み合わせです"
+          }
+        }
+      }
+    },
+    "Warning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
           }
         }
       }
