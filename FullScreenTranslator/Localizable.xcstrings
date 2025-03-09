@@ -77,6 +77,16 @@
         }
       }
     },
+    "Rotate" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回転"
+          }
+        }
+      }
+    },
     "Settings" : {
       "localizations" : {
         "ja" : {
