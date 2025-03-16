@@ -105,9 +105,7 @@ protocol SpeechRecognizerProtocol: Observable {
     guard isAuthorized else {
       throw Errors.notAuthorized
     }
-    guard isRecognizing else {
-      throw Errors.notRecognizing
-    }
+    audioEngine.inputNode.removeTap(onBus: 0)
     audioEngine.stop()
     recognitionRequest?.endAudio()
     isRecognizing = false
